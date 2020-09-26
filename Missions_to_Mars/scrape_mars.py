@@ -26,13 +26,15 @@ def scrape():
 
     # Retrieve the latest news title and paragraph
     try:
-
         slide_elem=news_soup.find('li', class_='slide')
-        news_title = slide_elem.find('div', class_='content_title').a.text
-        news_p = slide_elem.find('div', class_='article_teaser_body').text
+        news_title= slide_elem.find('div', class_='content_title').a.text
+        news_p =slide_elem.find('div', class_='article_teaser_body').text
+        
+    
     except AttributeError:
         news_title=None
         news_p=None
+
     # Mars image to scrape
 
     jpl_nasa_url = 'https://www.jpl.nasa.gov'
@@ -55,7 +57,9 @@ def scrape():
     # Convert table to dataframe
     mars_facts_df = facts_table[2]
     mars_facts_df.columns = ["Description", "Value"]
-    
+    mars_facts_df.set_index('Description', inplace=True)
+    mars_facts_df
+
     # Convert table to html
     mars_html_table = mars_facts_df.to_html()
     
@@ -106,11 +110,11 @@ def scrape():
 
     # Mars dictionary
     mars_dict = {
-            "news_title": news_title,
-            "news_p": news_p,
-            "featured_image_url": featured_image_url,
-            "fact_table": str(mars_html_table),
-            "hemisphere_images": hemisphere_image_urls
+        "news title": news_title,
+        "news p": news_p,
+        "featured_image_url": featured_image_url,
+        "fact_table": str(mars_html_table),
+        "hemisphere_images": hemisphere_image_urls
     }
     browser.quit()
 
